@@ -1,0 +1,42 @@
+[
+	{
+		"name": "Burj Khalifa",
+		"height": "100",
+		"width": "100",
+		"x": 10,
+		"y": 20,
+		"color":"brown"
+	},
+	{
+		"name": "Shanghai Tower",
+		"height": "120",
+		"width": "200",
+		"x": 120,
+		"y": 220,
+		"color":"green"
+	},
+	{
+		"name": "Abraj Al-Bait Clock Tower",
+		"height": "130",
+		"width": "100",
+		"x": 310,
+		"y": 320,
+		"color":"yellow"
+	},
+	{
+		"name": "Ping An Finance Centre",
+		"height": "140",
+		"width": "100",
+		"x": 410,
+		"y": 420,
+		"color":"blue"
+	},
+	{
+		"name": "Lotte World Tower Buildings/App/Data",
+		"height": "150",
+		"width": "100",
+		"x": 510,
+		"y": 520,
+		"color":"red"
+	}
+]
