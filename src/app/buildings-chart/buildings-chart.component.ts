@@ -43,7 +43,7 @@ export class BuildingsChartComponent implements OnInit {
                 //converting string number to integer
                 d.height = +d.height;
             });
-            var svg = d3.select("#chart-area")
+            var svg = d3.select("#chart-area-buildings")
                 .append("svg")
                 .attr("width", width + margin.left + margin.right)
                 .attr("height", height + margin.top + margin.bottom);
