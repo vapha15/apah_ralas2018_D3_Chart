@@ -14,7 +14,7 @@ var margin = { left: 80, right: 20, top: 50, bottom: 100 };
 var width = 600 - margin.left - margin.right;
 var height = 400 - margin.top - margin.bottom;
 
-var g = d3.select("#rower")
+var g = d3.select("#revenue-chart")
   .append("svg")
   .attr("width", width + margin.left + margin.right)
   .attr("height", height + margin.top + margin.bottom)
@@ -22,23 +22,23 @@ var g = d3.select("#rower")
   .attr("transform", "translate(" + margin.left + ", " + margin.top + ")");
 
 // X Label
-var xLabel = 
-g.append("text")
-  .attr("y", height + 50)
-  .attr("x", width / 2)
-  .attr("font-size", "20px")
-  .attr("text-anchor", "middle")
-  .text("Month");
+var xLabel =
+  g.append("text")
+    .attr("y", height + 50)
+    .attr("x", width / 2)
+    .attr("font-size", "20px")
+    .attr("text-anchor", "middle")
+    .text("Month");
 
 // Y Label
-var yLabel = 
- g.append("text")
-  .attr("y", -60)
-  .attr("x", -(height / 2))
-  .attr("font-size", "20px")
-  .attr("text-anchor", "middle")
-  .attr("transform", "rotate(-90)")
-  .text("Revenue");
+var yLabel =
+  g.append("text")
+    .attr("y", -60)
+    .attr("x", -(height / 2))
+    .attr("font-size", "20px")
+    .attr("text-anchor", "middle")
+    .attr("transform", "rotate(-90)")
+    .text("Revenue");
 writer("Update method called")
 
 // X Scale
@@ -68,24 +68,24 @@ export class RevenueChartComponent implements OnInit {
 
   constructor() { }
 
-    ngOnInit() {
+  ngOnInit() {
   }
 
   ngAfterContentInit() {
 
     //d3.json("http://localhost:3000/api/market").then(function (data: any[]) {
     d3.json("assets/revenue.json").then(function (data: any[]) {
-   
+
       console.log(data);
       // Clean data
       data.forEach(function (d) {
         d.revenue = +d.revenue;
         d.profit = +d.profit;
-        
+
       });
-  
+
       d3.interval(function () {
-        var newData = _flag ? data : data.slice(1);  
+        var newData = _flag ? data : data.slice(1);
         updateBartChart(newData)
         _flag = !_flag
       }, 1000);
@@ -103,7 +103,7 @@ function writer(data) {
 }
 
 function updateBartChart(data: any[]) {
-  var flagValue = _flag? "revenue" : "profit"; 
+  var flagValue = _flag ? "revenue" : "profit";
 
   x.domain(data.map(function (d) { return d.month }))
   y.domain([0, d3.max(data, function (d) { return d[flagValue] })])
@@ -115,21 +115,22 @@ function updateBartChart(data: any[]) {
   var yAxisCall = d3.axisLeft(y)
     .tickFormat(function (d) { return "$" + d; });
   yAxisGroup.transition(_transition).call(yAxisCall);
-  
+
   // Bars
   //JOIN new data with old elements
+  //rect or circle
   var rects = g.selectAll<SVGRectElement, any>("rect" as any)
-    .data(data, function(d){
+    .data(data, function (d) {
       return d.month
     })
 
   //EXIT old elements not present in new data
   rects.exit()
-  .attr("fill", "red")
-  .transition(_transition)
-  .attr("y", y(0))
-  .attr("height", 0)
-  .remove()
+    .attr("fill", "red")
+    .transition(_transition)
+    .attr("y", y(0))
+    .attr("height", 0)
+    .remove()
 
   //UPDATE old elements present in new data
   rects.transition(_transition)
@@ -153,15 +154,14 @@ function updateBartChart(data: any[]) {
     .attr("y", function (d) { return y(d[flagValue]); })
     .attr("height", function (d) { return height - y(d[flagValue]); })
 
-    // .attr("y", y(0))
-    // .attr("fill-opacity", 0)
-    // .transition(d3.transition().duration(500))
-    //   .attr("y", function(d){
-    //     return y(d[value]);})
-    //     .attr("fill-opacity", 1);
-   
-  
-    var label = _flag ? "Revenue" : "Profit";
-    yLabel.text(label);
-}
+  // .attr("y", y(0))
+  // .attr("fill-opacity", 0)
+  // .transition(d3.transition().duration(500))
+  //   .attr("y", function(d){
+  //     return y(d[value]);})
+  //     .attr("fill-opacity", 1);
 
+
+  var label = _flag ? "Revenue" : "Profit";
+  yLabel.text(label);
+}

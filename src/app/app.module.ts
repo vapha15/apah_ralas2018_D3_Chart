@@ -5,12 +5,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BuildingsChartComponent } from './buildings-chart/buildings-chart.component';
 import { RevenueChartComponent } from './revenue-chart/revenue-chart.component';
+import { LegendsChartComponent } from './legends-chart/legends-chart.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     BuildingsChartComponent,
-    RevenueChartComponent
+    RevenueChartComponent,
+    LegendsChartComponent
   ],
   imports: [
     BrowserModule,
