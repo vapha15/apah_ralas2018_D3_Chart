@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <title>MyDreamApp</title>
@@ -7,8 +8,24 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular.min.js"></script>
 </head>
+
 <body>
+   
   <app-root></app-root>
+  <div ng-app="myApp">
+    <h1>AngularJS Module Demo Test myController2: </h1>
+    <div ng-controller="myController2">
+      {{message}}
+    </div>
+
+    <h1>AngularJS Module Demo Test myController3: </h1>
+    <div ng-controller="myController3">
+      {{message}}
+    </div>
+  </div>
+  <div height="200" id="rower"></div>
 </body>
+
 </html>

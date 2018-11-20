@@ -35,8 +35,8 @@ export class BuildingsChartComponent implements OnInit {
         var width = 600 - margin.left - margin.right;
         var height = 400 - margin.top - margin.bottom;
         
-        // d3.json("assets/buildings.json").then(function (data: any[]) {
-        d3.json("http://localhost:3000/api/market").then(function (data: any[]) {
+        //d3.json("http://localhost:3000/api/market").then(function (data: any[]) {
+         d3.json("assets/data.json").then(function (data: any[]) {
             console.log(data);
 
             data.forEach(function (d) {

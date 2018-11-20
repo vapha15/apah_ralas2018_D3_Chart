@@ -1,0 +1,24 @@
+#chart-area-revenue svg {
+	margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+#logo {
+	height:100px;
+}
+
+.navbar-brand {
+	height: 60px;
+	padding: 5px 0px;
+}
+
+.x-axis-label{
+    color: orange
+}
+
+div{
+    color: blue
+}
+
+
