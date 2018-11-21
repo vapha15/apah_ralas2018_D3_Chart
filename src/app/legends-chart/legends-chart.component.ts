@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as d3 from 'd3';
+import d3Tip from 'd3-tip';
 
 var margin = { left:80, right:20, top:50, bottom:100 };
 var height = 500 - margin.top - margin.bottom, 
@@ -14,6 +15,20 @@ var g = d3.select("#legends-chart")
             ", " + margin.top + ")");
 
 var time = 0;
+
+//tool tip
+
+var tip = d3Tip().attr('class', 'd3-tip')
+    .html(function(d){
+        var text = "<strong>Country:</strong> <span style='color:red'>" + d.country + "</span><br>";
+        text += "<strong>Continent:</strong> <span style='color:red;text-transform:capitalize'>" + d.continent + "</span><br>";
+        text += "<strong>Life Expectancy:</strong> <span style='color:red'>" + d3.format(".2f")(d.life_exp) + "</span><br>";
+        text += "<strong>GDP Per Capita:</strong> <span style='color:red'>" + d3.format("$,.0f")(d.income) + "</span><br>";
+        text += "<strong>Population:</strong> <span style='color:red'>" + d3.format(",.0f")(d.population) + "</span><br>";
+        return text;
+    })
+
+g.call(tip)    
 
 // Scales
 var x = d3.scaleLog()
@@ -61,7 +76,7 @@ g.append("g")
 
 // Y Axis
 var yAxisCall = d3.axisLeft(y)
-    .tickFormat(function(d){ return "$" +d; });
+    .tickFormat(function(d){ return "" +d; });
 g.append("g")
     .attr("class", "y axis")
     .call(yAxisCall);
@@ -155,6 +170,8 @@ function update(data: any[]) {
         .append("circle")
         .attr("class", "enter")
         .attr("fill", function(d) { return continentColor(d.continent); })
+        .on("mouseover", tip.show)
+        .on("mouseout", tip.hide)
         .merge(circles)
         .transition(t)
             .attr("cy", function(d){ return y(d.life_exp); })
