@@ -14,48 +14,16 @@ var margin = { left: 80, right: 20, top: 50, bottom: 100 };
 var width = 600 - margin.left - margin.right;
 var height = 400 - margin.top - margin.bottom;
 
-var g = d3.select("#revenue-chart")
-  .append("svg")
-  .attr("width", width + margin.left + margin.right)
-  .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-  .attr("transform", "translate(" + margin.left + ", " + margin.top + ")");
+var x;
+var g;
+var y;
+var xAxisGroup;
+var yAxisGroup ;
+var xLabel;
+var yLabel;
 
-// X Label
-var xLabel =
-  g.append("text")
-    .attr("y", height + 50)
-    .attr("x", width / 2)
-    .attr("font-size", "20px")
-    .attr("text-anchor", "middle")
-    .text("Month");
 
-// Y Label
-var yLabel =
-  g.append("text")
-    .attr("y", -60)
-    .attr("x", -(height / 2))
-    .attr("font-size", "20px")
-    .attr("text-anchor", "middle")
-    .attr("transform", "rotate(-90)")
-    .text("Revenue");
-writer("Update method called")
 
-// X Scale
-var x = d3.scaleBand()
-  .range([0, width])
-  .padding(0.2);
-
-// Y Scale
-var y = d3.scaleLinear()
-  .range([height, 0]);
-
-var xAxisGroup = g.append("g")
-  .attr("class", "x axis")
-  .attr("transform", "translate(0," + height + ")")
-
-var yAxisGroup = g.append("g")
-  .attr("class", "y axis")
 
 @Component({
   selector: 'app-revenue-chart',
@@ -68,10 +36,52 @@ export class RevenueChartComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-  }
-
   ngAfterContentInit() {
+    g = d3.select("#revenue-chart")
+  .append("svg")
+  .attr("width", width + margin.left + margin.right)
+  .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+  .attr("transform", "translate(" + margin.left + ", " + margin.top + ")");
+
+// X Label
+  xLabel =
+  g.append("text")
+    .attr("y", height + 50)
+    .attr("x", width / 2)
+    .attr("font-size", "20px")
+    .attr("text-anchor", "middle")
+    .text("Month");
+
+// Y Label
+ yLabel =
+  g.append("text")
+    .attr("y", -60)
+    .attr("x", -(height / 2))
+    .attr("font-size", "20px")
+    .attr("text-anchor", "middle")
+    .attr("transform", "rotate(-90)")
+    .text("Revenue");
+writer("Update method called")
+
+// X Scale
+ x = d3.scaleBand()
+  .range([0, width])
+  .padding(0.2);
+
+// Y Scale
+ y = d3.scaleLinear()
+  .range([height, 0]);
+
+ xAxisGroup = g.append("g")
+  .attr("class", "x axis")
+  .attr("transform", "translate(0," + height + ")")
+
+yAxisGroup = g.append("g")
+  .attr("class", "y axis")
+  }
+ 
+  ngOnInit() {
 
     //d3.json("http://localhost:3000/api/market").then(function (data: any[]) {
     d3.json("assets/revenue.json").then(function (data: any[]) {
@@ -119,7 +129,7 @@ function updateBartChart(data: any[]) {
   // Bars
   //JOIN new data with old elements
   //rect or circle
-  var rects = g.selectAll<SVGRectElement, any>("rect" as any)
+  var rects = g.selectAll("rect" as any)
     .data(data, function (d) {
       return d.month
     })

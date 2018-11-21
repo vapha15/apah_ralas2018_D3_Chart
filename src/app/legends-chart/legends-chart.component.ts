@@ -5,8 +5,30 @@ import d3Tip from 'd3-tip';
 var margin = { left:80, right:20, top:50, bottom:100 };
 var height = 500 - margin.top - margin.bottom, 
     width = 800 - margin.left - margin.right;
+    var g;
+    var time;
+    var tip;
+    var x;
+    var y;
+    var area;
+    var continentColor;
+    var xLabel;
+    var yLabel;
+    var timeLabel;
+    var xAxisCall;
+    var yAxisCall;
 
-var g = d3.select("#legends-chart")
+@Component({
+  selector: 'app-legends-chart',
+  templateUrl: './legends-chart.component.html',
+  styleUrls: ['./legends-chart.component.css']
+})
+export class LegendsChartComponent implements OnInit {
+
+  constructor() { }
+
+  ngOnInit() {
+     g = d3.select("#legends-chart")
     .append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
@@ -14,11 +36,11 @@ var g = d3.select("#legends-chart")
         .attr("transform", "translate(" + margin.left + 
             ", " + margin.top + ")");
 
-var time = 0;
+ time = 0;
 
 //tool tip
 
-var tip = d3Tip().attr('class', 'd3-tip')
+tip = d3Tip().attr('class', 'd3-tip')
     .html(function(d){
         var text = "<strong>Country:</strong> <span style='color:red'>" + d.country + "</span><br>";
         text += "<strong>Continent:</strong> <span style='color:red;text-transform:capitalize'>" + d.continent + "</span><br>";
@@ -31,33 +53,33 @@ var tip = d3Tip().attr('class', 'd3-tip')
 g.call(tip)    
 
 // Scales
-var x = d3.scaleLog()
+x = d3.scaleLog()
     .base(10)
     .range([0, width])
     .domain([142, 150000]);
-var y = d3.scaleLinear()
+y = d3.scaleLinear()
     .range([height, 0])
     .domain([0, 90]);
-var area = d3.scaleLinear()
+ area = d3.scaleLinear()
     .range([25*Math.PI, 1500*Math.PI])
     .domain([2000, 1400000000]);
-var continentColor = d3.scaleOrdinal(d3.schemePastel1);
+ continentColor = d3.scaleOrdinal(d3.schemePastel1);
 
 // Labels
-var xLabel = g.append("text")
+xLabel = g.append("text")
     .attr("y", height + 50)
     .attr("x", width / 2)
     .attr("font-size", "20px")
     .attr("text-anchor", "middle")
     .text("GDP Per Capita ($)");
-var yLabel = g.append("text")
+ yLabel = g.append("text")
     .attr("transform", "rotate(-90)")
     .attr("y", -40)
     .attr("x", -170)
     .attr("font-size", "20px")
     .attr("text-anchor", "middle")
     .text("Life Expectancy (Years)")
-var timeLabel = g.append("text")
+ timeLabel = g.append("text")
     .attr("y", height -10)
     .attr("x", width - 40)
     .attr("font-size", "40px")
@@ -66,7 +88,7 @@ var timeLabel = g.append("text")
     .text("1800");
 
 // X Axis
-var xAxisCall = d3.axisBottom(x)
+xAxisCall = d3.axisBottom(x)
     .tickValues([400, 4000, 40000])
     .tickFormat(d3.format("$"));
 g.append("g")
@@ -75,7 +97,7 @@ g.append("g")
     .call(xAxisCall);
 
 // Y Axis
-var yAxisCall = d3.axisLeft(y)
+yAxisCall = d3.axisLeft(y)
     .tickFormat(function(d){ return "" +d; });
 g.append("g")
     .attr("class", "y axis")
@@ -104,17 +126,6 @@ continents.forEach(function(continent, i){
         .text(continent);
 });
 
-
-@Component({
-  selector: 'app-legends-chart',
-  templateUrl: './legends-chart.component.html',
-  styleUrls: ['./legends-chart.component.css']
-})
-export class LegendsChartComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
   }
   ngAfterContentInit() {
     d3.json("assets/legends.json").then(function(data: any[]){
@@ -155,7 +166,7 @@ function update(data: any[]) {
         .duration(100);
 
     // JOIN new data with old elements.
-    var circles = g.selectAll<SVGCircleElement, any>("circle" as any)
+    var circles = g.selectAll("circle" as any)
     .data(data, function (d) {
       return d.country
     })
