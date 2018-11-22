@@ -27,7 +27,7 @@
               "src/styles.css"
             ],
             "scripts": [
-              "src/app/buildings-chart/d3/script/app.js"
+              "src/js/d3/script/app.js"
             ]
           },
           "configurations": {

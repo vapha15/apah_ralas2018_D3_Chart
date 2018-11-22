@@ -1,7 +1,10 @@
+
 import { Component, OnInit, ViewChild } from '@angular/core';
 import * as d3 from 'd3';
 import d3Tip from 'd3-tip';
 import * as $ from 'jquery';
+
+
 
 
 var margin = { left: 80, right: 20, top: 50, bottom: 100 };
@@ -21,9 +24,10 @@ var xAxisCall;
 var yAxisCall;
 var formattedData = null;
 var interval;
-
-
+var playButton;
+var slider;
 var element: HTMLElement;
+
 @Component({
     selector: 'app-legends-chart',
     templateUrl: './legends-chart.component.html',
@@ -32,9 +36,31 @@ var element: HTMLElement;
 export class LegendsChartComponent implements OnInit {
     @ViewChild('playButton') playButton
     ElementRef;
-    constructor() { }
+    constructor() {
+        // $2("#slider-div").slider({
+        //     max: 2014,
+        //     min: 1800,
+        //     step: 1,
+        //     slide: function(event, ui){
+        //         time = ui.value - 1800;
+        //         update(formattedData[time]);
+        //     }
+        // })
+     }
 
     ngOnInit() {
+        playButton = $("#play-button");
+
+
+    
+
+      
+      
+        
+        
+
+     
+   
         g = d3.select("#legends-chart")
             .append("svg")
             .attr("width", width + margin.left + margin.right)
@@ -164,13 +190,13 @@ export class LegendsChartComponent implements OnInit {
 
     }
     onStart(event: any) {
-        var button =  $("#play-button");
-        if(button.text() == "Play"){
-            button.text("Pause")
+
+        if (playButton.text() == "Play") {
+            playButton.text("Pause")
             interval = setInterval(step, 100);
         }
-        else{
-            button.text("Play")
+        else {
+            playButton.text("Play")
             clearInterval(interval)
         }
     }
@@ -179,18 +205,23 @@ export class LegendsChartComponent implements OnInit {
         time = 0;
         update(formattedData[0])
     }
+
+    onChange(event: any) {
+
+        update(formattedData[time])
+    }
 }
 
 function update(data: any[]) {
 
     var continentDropdownListValue = $("#continent-select").val();
-    
-    var data = data.filter(function(d){
-  
-        if(continentDropdownListValue == "all") {
-            {return true;}
+
+    var data = data.filter(function (d) {
+
+        if (continentDropdownListValue == "all") {
+            { return true; }
         }
-        else{
+        else {
             return d.continent == continentDropdownListValue;
         }
     })
@@ -224,10 +255,16 @@ function update(data: any[]) {
 
     // Update the time label
     timeLabel.text(+(time + 1800))
+
+    // $("#year")[0].innerHTML = +(time + 1800)
+
+    // $("#date-slider").slider("value", +(time + 1800))
 }
 
 function step() {
     time = (time < 214) ? time + 1 : 0
     update(formattedData[time]);
+    
 }
+
 

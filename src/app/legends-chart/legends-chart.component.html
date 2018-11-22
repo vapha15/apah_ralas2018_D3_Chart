@@ -1,16 +1,26 @@
+
 <div class="d3-tip"> D3-TIP Legends </div>
 <div id="legends-chart"></div>
 
 <!-- Bootstrap grid setup -->
 <div class="container">
+
     <div class="row">
         <div class="col-md-6">
             <button width="200px" id="play-button" class="btn btn-primary" (click)="onStart($event)">Play</button>
             <!-- <button width="200px" id="play-button" class="btn btn-primary">Play</button> -->
             <button id="reset-button" class="btn btn-primary" (click)="onReset($event)">Reset</button>
+            <div id="date-slider"></div>
+            <div id="slider-div">
+                    <div id="slider"></div>
+                <label>Year: <span id="year">1800</span></label>
+               
+            </div>
+        
         </div>
+
         <div class="col-md-6">
-            <select id="continent-select" class="form-control">
+            <select id="continent-select" class="form-control" (change)="onChange($event)">
                 <option selected value="all">All</option>
                 <option value="europe">Europe</option>
                 <option value="asia">Asia</option>
@@ -20,8 +30,16 @@
         </div>
     </div>
     <div class="row">
+
         <div class="col-md-12">
             <div id="chart-area"></div>
         </div>
     </div>
 </div>
+
+<div ng-controller="myController">
+    Rating: {{rating}}
+    <div slider ng-model="rating"></div>
+    <div id="slider"></div>
+</div> 
+        
