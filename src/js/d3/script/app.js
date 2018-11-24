@@ -3,10 +3,11 @@ var myApp = angular.module("myApp", []);
 
  myApp.controller("myController2", function ($scope) {
     $scope.message = "myController2";
+   
 });
 
 myApp.controller("myController3", function ($scope) {
-    $scope.message = "myController3";
+  $scope.message = "myController3";
 });
 
 myApp.controller('myController', function($scope){
@@ -21,19 +22,17 @@ return {
     scope: {
         ngModel: '='
     },
+  
+   
   link: function(scope, elem, attrs) {
-
-    console.log(scope.ngModel);
-    console.log("Virker");
-
     return $(elem).slider({
-      range: "min",
-      animate: true,
-      value: scope.ngModel,
+      max:100,
+      min: 0,
+      step: 1,
+      range: false,
+      value: 50,
       slide: function(event, ui) {
-        return scope.$apply(function(){
-          scope.ngModel = ui.value;
-        });
+      console.log(ui.value)
       }
     });
   }

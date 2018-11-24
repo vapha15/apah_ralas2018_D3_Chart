@@ -3,9 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import * as d3 from 'd3';
 import d3Tip from 'd3-tip';
 import * as $ from 'jquery';
-
-
-
+declare var $: $
 
 var margin = { left: 80, right: 20, top: 50, bottom: 100 };
 var height = 500 - margin.top - margin.bottom,
@@ -49,18 +47,17 @@ export class LegendsChartComponent implements OnInit {
      }
 
     ngOnInit() {
-        playButton = $("#play-button");
+        playButton = $("#play-button")
 
 
     
 
+;
       
       
         
         
 
-     
-   
         g = d3.select("#legends-chart")
             .append("svg")
             .attr("width", width + margin.left + margin.right)
@@ -161,9 +158,13 @@ export class LegendsChartComponent implements OnInit {
 
     }
     ngAfterContentInit() {
+
+     
+
+
         d3.json("assets/legends.json").then(function (data: any[]) {
             console.log(data);
-
+            test()
             // Clean data
             formattedData = data.map(function (year) {
                 return year["countries"].filter(function (country) {
@@ -189,8 +190,11 @@ export class LegendsChartComponent implements OnInit {
         })
 
     }
+
+    
     onStart(event: any) {
 
+     
         if (playButton.text() == "Play") {
             playButton.text("Pause")
             interval = setInterval(step, 100);
@@ -201,8 +205,10 @@ export class LegendsChartComponent implements OnInit {
         }
     }
 
+  
     onReset(event: any) {
         time = 0;
+        
         update(formattedData[0])
     }
 
@@ -214,6 +220,7 @@ export class LegendsChartComponent implements OnInit {
 
 function update(data: any[]) {
 
+  
     var continentDropdownListValue = $("#continent-select").val();
 
     var data = data.filter(function (d) {
@@ -267,4 +274,17 @@ function step() {
     
 }
 
+
+function test() {
+    $("#slider").slider({
+        max:100,
+        min: 0,
+        step: 1,
+        range: false,
+        value: 50,
+        slide: function(event, ui) {
+        console.log(ui.value)
+        }
+      });
+  }
 

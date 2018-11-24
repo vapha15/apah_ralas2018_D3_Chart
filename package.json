@@ -25,6 +25,9 @@
     "core-js": "^2.5.4",
     "d3": "^5.7.0",
     "d3-tip": "^0.9.1",
+    "jquery": "^3.3.1",
+    "jquery-ui": "github:jquery/jquery-ui#1.12.1",
+    "jquery-ui-dist": "^1.12.1",
     "rxjs": "~6.3.3",
     "zone.js": "~0.8.26"
   },
@@ -40,8 +43,6 @@
     "codelyzer": "~4.5.0",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
-    "jquery": "^1.12.4",
-    "jquery-ui": "^1.12.1",
     "karma": "~3.0.0",
     "karma-chrome-launcher": "~2.2.0",
     "karma-coverage-istanbul-reporter": "~2.0.1",
