@@ -23,8 +23,6 @@ var yAxisCall;
 var formattedData = null;
 var interval;
 var playButton;
-var slider;
-var element: HTMLElement;
 
 @Component({
     selector: 'app-legends-chart',
@@ -35,28 +33,11 @@ export class LegendsChartComponent implements OnInit {
     @ViewChild('playButton') playButton
     ElementRef;
     constructor() {
-        // $2("#slider-div").slider({
-        //     max: 2014,
-        //     min: 1800,
-        //     step: 1,
-        //     slide: function(event, ui){
-        //         time = ui.value - 1800;
-        //         update(formattedData[time]);
-        //     }
-        // })
-     }
+    }
 
     ngOnInit() {
+
         playButton = $("#play-button")
-
-
-    
-
-;
-      
-      
-        
-        
 
         g = d3.select("#legends-chart")
             .append("svg")
@@ -159,12 +140,10 @@ export class LegendsChartComponent implements OnInit {
     }
     ngAfterContentInit() {
 
-     
-
-
         d3.json("assets/legends.json").then(function (data: any[]) {
             console.log(data);
-            test()
+            //Starts the slider
+            slider()
             // Clean data
             formattedData = data.map(function (year) {
                 return year["countries"].filter(function (country) {
@@ -191,10 +170,20 @@ export class LegendsChartComponent implements OnInit {
 
     }
 
+    ngAfterContentChecked() {
+    }
+
+    ngAfterViewInit() {
+    }
     
+
+    ngAfterViewChecked() {
+        
+    }
+
     onStart(event: any) {
 
-     
+
         if (playButton.text() == "Play") {
             playButton.text("Pause")
             interval = setInterval(step, 100);
@@ -205,10 +194,10 @@ export class LegendsChartComponent implements OnInit {
         }
     }
 
-  
+
     onReset(event: any) {
         time = 0;
-        
+
         update(formattedData[0])
     }
 
@@ -220,7 +209,7 @@ export class LegendsChartComponent implements OnInit {
 
 function update(data: any[]) {
 
-  
+
     var continentDropdownListValue = $("#continent-select").val();
 
     var data = data.filter(function (d) {
@@ -262,29 +251,29 @@ function update(data: any[]) {
 
     // Update the time label
     timeLabel.text(+(time + 1800))
+    $("#year")[0].innerHTML = +(time + 1800)
 
-    // $("#year")[0].innerHTML = +(time + 1800)
-
-    // $("#date-slider").slider("value", +(time + 1800))
+    $("#slider").slider("value", +(time + 1800))
 }
 
 function step() {
     time = (time < 214) ? time + 1 : 0
     update(formattedData[time]);
-    
+
 }
 
-
-function test() {
+function slider() {
     $("#slider").slider({
-        max:100,
-        min: 0,
+        max: 2014,
+        min: 1800,
         step: 1,
         range: false,
         value: 50,
-        slide: function(event, ui) {
-        console.log(ui.value)
+        slide: function (event, ui) {
+            time = ui.value - 1800;
+            console.log(ui.value)
+            update(formattedData[time])
         }
-      });
-  }
+    });
+}
 
