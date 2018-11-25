@@ -52,7 +52,7 @@ export class LineChartComponent implements OnInit {
       .attr("transform", "translate(" + margin.left +
         ", " + margin.top + ")");
 
-   t = function () { return d3.transition().duration(1000); }
+    t = function () { return d3.transition().duration(1000); }
 
     // Scales
     x = d3.scaleTime().range([0, width]);
@@ -109,7 +109,7 @@ export class LineChartComponent implements OnInit {
       console.log(data);
 
       slider()
-   
+
       // Prepare and clean data
       filteredData = {};
       for (var coin in data) {
@@ -141,17 +141,17 @@ export class LineChartComponent implements OnInit {
 function update() {
   // Filter data based on selections
   var coin = $("#coin-select").val(),
-      yValue = $("#var-select").val(),
-      sliderValues = $("#date-slider").slider("values");
-  var dataTimeFiltered = filteredData[coin].filter(function(d){
-      return ((d.date >= sliderValues[0]) && (d.date <= sliderValues[1]))
+    yValue = $("#var-select").val(),
+    sliderValues = $("#date-slider").slider("values");
+  var dataTimeFiltered = filteredData[coin].filter(function (d) {
+    return ((d.date >= sliderValues[0]) && (d.date <= sliderValues[1]))
   });
 
-   // Update scales
-   x.domain(d3.extent(dataTimeFiltered, function(d: any){ return d.date; }));
-   y.domain([d3.min(dataTimeFiltered, function(d){ return d[yValue]; }), 
-       d3.max(dataTimeFiltered, function(d){ return d[yValue]; })]);
-    
+  // Update scales
+  x.domain(d3.extent(dataTimeFiltered, function (d: any) { return d.date; }));
+  y.domain([+d3.min(dataTimeFiltered, function (d) { return d[yValue]; })/ 1.005,
+  +d3.max(dataTimeFiltered, function (d) { return d[yValue]; })* 1.005]);
+
   // Fix for format values
   var formatSi = d3.format(".2s");
   function formatAbbreviation(x) {
@@ -175,59 +175,59 @@ function update() {
 
   // Tooltip code
   var focus = g.append("g")
-      .attr("class", "focus")
-      .style("display", "none");
+    .attr("class", "focus")
+    .style("display", "none");
   focus.append("line")
-      .attr("class", "x-hover-line hover-line")
-      .attr("y1", 0)
-      .attr("y2", height);
+    .attr("class", "x-hover-line hover-line")
+    .attr("y1", 0)
+    .attr("y2", height);
   focus.append("line")
-      .attr("class", "y-hover-line hover-line")
-      .attr("x1", 0)
-      .attr("x2", width);
+    .attr("class", "y-hover-line hover-line")
+    .attr("x1", 0)
+    .attr("x2", width);
   focus.append("circle")
-      .attr("r", 5);
+    .attr("r", 5);
   focus.append("text")
-      .attr("x", 15)
-      .attr("dy", ".31em");
+    .attr("x", 15)
+    .attr("dy", ".31em");
   svg.append("rect")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-      .attr("class", "overlay")
-      .attr("width", width)
-      .attr("height", height)
-      .attr("opacity", 0)
-      .on("mouseover", function() { focus.style("display", null); })
-      .on("mouseout", function() { focus.style("display", "none"); })
-      .on("mousemove", mousemove);
-      
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+    .attr("class", "overlay")
+    .attr("width", width)
+    .attr("height", height)
+    .attr("opacity", 0)
+    .on("mouseover", function () { focus.style("display", null); })
+    .on("mouseout", function () { focus.style("display", "none"); })
+    .on("mousemove", mousemove);
+
   function mousemove() {
-      var x0 = x.invert(d3.mouse(this)[0]),
-          i = bisectDate(dataTimeFiltered, x0, 1),
-          d0 = dataTimeFiltered[i - 1],
-          d1 = dataTimeFiltered[i],
-          d = (d1 && d0) ? (x0 - d0.date > d1.date - x0 ? d1 : d0) : 0;
-      focus.attr("transform", "translate(" + x(d.date) + "," + y(d[yValue]) + ")");
-      focus.select("text").text(function() { return d3.format("$,")(d[yValue].toFixed(2)); });
-      focus.select(".x-hover-line").attr("y2", height - y(d[yValue]));
-      focus.select(".y-hover-line").attr("x2", -x(d.date));
+    var x0 = x.invert(d3.mouse(this)[0]),
+      i = bisectDate(dataTimeFiltered, x0, 1),
+      d0 = dataTimeFiltered[i - 1],
+      d1 = dataTimeFiltered[i],
+      d = (d1 && d0) ? (x0 - d0.date > d1.date - x0 ? d1 : d0) : 0;
+    focus.attr("transform", "translate(" + x(d.date) + "," + y(d[yValue]) + ")");
+    focus.select("text").text(function () { return d3.format("$,")(d[yValue].toFixed(2)); });
+    focus.select(".x-hover-line").attr("y2", height - y(d[yValue]));
+    focus.select(".y-hover-line").attr("x2", -x(d.date));
   }
 
   // Path generator
   line = d3.line()
-      .x(function(d: any){ return x(d.date); })
-      .y(function(d){ return y(d[yValue]); });
+    .x(function (d: any) { return x(d.date); })
+    .y(function (d) { return y(d[yValue]); });
 
   // Update our line path
   g.select(".line")
-      .transition(t)
-      .attr("d", line(dataTimeFiltered));
+    .transition(t)
+    .attr("d", line(dataTimeFiltered));
 
   // Update y-axis label
   var newText = (yValue == "price_usd") ? "Price (USD)" :
-      ((yValue == "market_cap") ?  "Market Capitalization (USD)" : "24 Hour Trading Volume (USD)")
+    ((yValue == "market_cap") ? "Market Capitalization (USD)" : "24 Hour Trading Volume (USD)")
   yLabel.text(newText);
 
-console.log("ddddd1111")
+  console.log("ddddd1111")
 }
 
 function slider() {
