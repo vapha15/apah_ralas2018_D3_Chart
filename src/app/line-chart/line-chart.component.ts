@@ -151,6 +151,7 @@ export class LineChartComponent implements OnInit {
       .attr("class", "overlay")
       .attr("width", width)
       .attr("height", height)
+      .attr("opacity",0)
       .on("mouseover", function() { focus.style("display", null); })
       .on("mouseout", function() { focus.style("display", "none"); })
       .on("mousemove", mousemove);
