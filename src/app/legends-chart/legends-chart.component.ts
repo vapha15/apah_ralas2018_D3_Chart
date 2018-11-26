@@ -143,7 +143,7 @@ export class LegendsChartComponent implements OnInit {
         d3.json("assets/legends.json").then(function (data: any[]) {
             console.log(data);
             //Starts the slider
-            slider()
+
             // Clean data
             formattedData = data.map(function (year) {
                 return year["countries"].filter(function (country) {
@@ -171,18 +171,19 @@ export class LegendsChartComponent implements OnInit {
     }
 
     ngAfterContentChecked() {
+     
     }
 
     ngAfterViewInit() {
+       
     }
-    
 
     ngAfterViewChecked() {
-        
+        slider()
+        $("#slider").slider("value", +(time + 1800))
     }
 
     onStart(event: any) {
-
 
         if (playButton.text() == "Play") {
             playButton.text("Pause")
@@ -193,7 +194,6 @@ export class LegendsChartComponent implements OnInit {
             clearInterval(interval)
         }
     }
-
 
     onReset(event: any) {
         time = 0;
@@ -208,7 +208,6 @@ export class LegendsChartComponent implements OnInit {
 }
 
 function update(data: any[]) {
-
 
     var continentDropdownListValue = $("#continent-select").val();
 
@@ -249,6 +248,7 @@ function update(data: any[]) {
         .attr("cx", function (d) { return x(d.income) })
         .attr("r", function (d) { return Math.sqrt(area(d.population) / Math.PI) });
 
+
     // Update the time label
     timeLabel.text(+(time + 1800))
     $("#year")[0].innerHTML = +(time + 1800)
@@ -263,6 +263,7 @@ function step() {
 }
 
 function slider() {
+
     $("#slider").slider({
         max: 2014,
         min: 1800,
@@ -273,6 +274,7 @@ function slider() {
             time = ui.value - 1800;
             console.log(ui.value)
             update(formattedData[time])
+
         }
     });
 }

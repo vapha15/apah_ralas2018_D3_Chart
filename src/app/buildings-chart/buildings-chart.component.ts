@@ -4,6 +4,9 @@ import * as d3Scale from 'd3-scale';
 import * as d3Shape from 'd3-shape';
 import { ThrowStmt } from '@angular/compiler';
 import { svg } from 'd3';
+import * as $ from 'jquery';
+declare var $: $;
+
 
 @Component({
     selector: 'app-buildings-chart',
@@ -15,21 +18,28 @@ export class BuildingsChartComponent implements OnInit {
     @ViewChild('chart')
     chartElement: ElementRef;
 
-
-
-
     constructor() {
-
-
+    
     }
 
     ngOnInit() {
-
+        
     }
 
+    ngAfterContentChecked() {
+       
+    }
+
+    ngAfterViewInit() {
+        
+    } 
+
+    ngAfterViewChecked() {
+       
+    }
 
     ngAfterContentInit() {
-
+        
         var margin = { left: 100, right: 10, top: 10, bottom: 150 };
 
         var width = 600 - margin.left - margin.right;
@@ -38,7 +48,7 @@ export class BuildingsChartComponent implements OnInit {
         //d3.json("http://localhost:3000/api/market").then(function (data: any[]) {
          d3.json("assets/data.json").then(function (data: any[]) {
             console.log(data);
-
+       
             data.forEach(function (d) {
                 //converting string number to integer
                 d.height = +d.height;
@@ -166,4 +176,10 @@ export class BuildingsChartComponent implements OnInit {
         })
     }
 
+}
+
+function slider() { 
+    $("#slider-buildings").slider({
+    
+    });
 }
