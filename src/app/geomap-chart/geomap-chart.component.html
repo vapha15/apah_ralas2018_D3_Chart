@@ -1,0 +1,33 @@
+<title>8.4 - Choropleth maps</title>
+<nav class="navbar navbar-default"></nav>
+<svg width="960" height="600"></svg>
+
+
+<!-- Bootstrap grid setup -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div id="geomap-chart"></div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <button width="200px" id="play-button" class="btn btn-primary" (click)="onStart($event)">Play</button>
+        <!-- <button width="200px" id="play-button" class="btn btn-primary">Play</button> -->
+        <button id="reset-button" class="btn btn-primary" (click)="onReset($event)">Reset</button>
+        <div id="slider-div">
+            <label>Year: <span id="year">1800</span></label>
+            <div id="slider-geomap"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <select id="continent-select" class="form-control" (change)="onChange($event)">
+                <option selected value="all">All</option>
+                <option value="europe">Europe</option>
+                <option value="asia">Asia</option>
+                <option value="americas">Americas</option>
+                <option value="africa">Africa</option>
+            </select>
+        </div>
+    </div>
+</div>
