@@ -10,6 +10,7 @@ import * as topology2 from 'topojson-specification';
 import { FullBarchartChartComponent } from '../full-barchart-chart/full-barchart-chart.component';
 import { FullDonutschartChartComponent } from '../full-donutschart-chart/full-donutschart-chart.component';
 import { FullStackedareachartChartComponent} from '../full-stackedareachart-chart/full-stackedareachart-chart.component'
+import { FullTimelinechartChartComponent} from '../full-timelinechart-chart/full-timelinechart-chart.component'
 var margin = { left: 80, right: 20, top: 50, bottom: 100 };
 var height = 500 - margin.top - margin.bottom,
   width = 800 - margin.left - margin.right;
@@ -81,7 +82,7 @@ export class FullChartComponent implements OnInit {
 
       stackedArea = new FullStackedareachartChartComponent("#stacked-area")
 
-      //timeline = new Timeline("#timeline")
+      timeline = new FullTimelinechartChartComponent("#timeline")
 
       $("#var-select").on("change", function () {
 
@@ -113,6 +114,8 @@ export class FullChartComponent implements OnInit {
 }
 
 function brushed() {
+  var vis = this
+  console.log("#####TRIGGED")
   var selection = d3.event.selection || timeline.x.range();
   var newValues = selection.map(timeline.x.invert)
   changeDates(newValues)
@@ -132,7 +135,11 @@ function changeDates(values) {
   $("#dateLabel1").text(formatTime(values[0]))
   $("#dateLabel2").text(formatTime(values[1]))
 
-  //stackedArea.wrangleData();
+  donut.wrangleData();
+  revenueBar.wrangleData();
+  unitBar.wrangleData();
+  //durationBar.wrangleData();
+  stackedArea.wrangleData();
 }
 
 export class NestedCall {
@@ -143,6 +150,10 @@ export class NestedCall {
 
   get callsArray() {
     return calls;
+  }
+
+  get brushedFunction() {
+    return brushed;
   }
 
 

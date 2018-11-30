@@ -72,7 +72,6 @@ export class FullStackedareachartChartComponent implements OnInit {
 
 wrangleData = function(){
 
-  var vis = this;
   vis.variable = $("#var-select").val()
 
   vis.dayNest = d3.nest()
@@ -98,7 +97,6 @@ wrangleData = function(){
 
 updateVis = function(){
  
-  vis = this;
   vis.maxDateVal = d3.max(vis.dataFiltered, function(d){
       var vals = d3.keys(d).map(function(key){ return key !== 'date' ? d[key] : 0 });
       return d3.sum(vals);
@@ -134,7 +132,6 @@ updateVis = function(){
 
 addLegend = function(){
   
-  vis = this;
   var legend = vis.g.append("g")
       .attr("transform", "translate(" + (50) + 
                   ", " + (-25) + ")");

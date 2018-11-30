@@ -11,10 +11,10 @@ import {HttpClientModule} from '@angular/common/http';
 import { BuildingsService } from './buildings-chart/buildings.service';
 import { GeomapChartComponent } from './geomap-chart/geomap-chart.component';
 import { FullChartComponent } from './full-chart/full-chart.component';
-import { FullTimelineChartComponent } from './full-timeline-chart/full-timeline-chart.component';
 import { FullBarchartChartComponent } from './full-barchart-chart/full-barchart-chart.component';
 import { FullDonutschartChartComponent } from './full-donutschart-chart/full-donutschart-chart.component';
 import { FullStackedareachartChartComponent } from './full-stackedareachart-chart/full-stackedareachart-chart.component';
+import { FullTimelinechartChartComponent } from './full-timelinechart-chart/full-timelinechart-chart.component';
 
 @NgModule({
   declarations: [
@@ -25,10 +25,10 @@ import { FullStackedareachartChartComponent } from './full-stackedareachart-char
     LineChartComponent,
     GeomapChartComponent,
     FullChartComponent,
-    FullTimelineChartComponent,
     FullBarchartChartComponent,
     FullDonutschartChartComponent,
     FullStackedareachartChartComponent,
+    FullTimelinechartChartComponent,
   ],
   imports: [
     BrowserModule,
