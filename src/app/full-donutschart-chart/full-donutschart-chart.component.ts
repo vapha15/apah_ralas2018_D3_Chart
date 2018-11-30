@@ -18,7 +18,7 @@ export class FullDonutschartChartComponent implements OnInit {
   constructor(_parentElement: string) {
 
     this.parentElement = _parentElement;
-    console.log("wranglede data")
+  
     this.initVis();
 
   }
@@ -70,8 +70,6 @@ export class FullDonutschartChartComponent implements OnInit {
 
 
   wrangleData = function () {
-
-    vis = this;
 
     sizeNest = d3.nest()
       .key(function (d: any) {

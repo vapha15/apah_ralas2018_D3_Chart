@@ -14,6 +14,7 @@ import { FullChartComponent } from './full-chart/full-chart.component';
 import { FullTimelineChartComponent } from './full-timeline-chart/full-timeline-chart.component';
 import { FullBarchartChartComponent } from './full-barchart-chart/full-barchart-chart.component';
 import { FullDonutschartChartComponent } from './full-donutschart-chart/full-donutschart-chart.component';
+import { FullStackedareachartChartComponent } from './full-stackedareachart-chart/full-stackedareachart-chart.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { FullDonutschartChartComponent } from './full-donutschart-chart/full-don
     FullTimelineChartComponent,
     FullBarchartChartComponent,
     FullDonutschartChartComponent,
+    FullStackedareachartChartComponent,
   ],
   imports: [
     BrowserModule,

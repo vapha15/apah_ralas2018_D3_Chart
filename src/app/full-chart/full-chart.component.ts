@@ -9,7 +9,7 @@ import *as top from 'geojson';
 import * as topology2 from 'topojson-specification';
 import { FullBarchartChartComponent } from '../full-barchart-chart/full-barchart-chart.component';
 import { FullDonutschartChartComponent } from '../full-donutschart-chart/full-donutschart-chart.component';
-
+import { FullStackedareachartChartComponent} from '../full-stackedareachart-chart/full-stackedareachart-chart.component'
 var margin = { left: 80, right: 20, top: 50, bottom: 100 };
 var height = 500 - margin.top - margin.bottom,
   width = 800 - margin.left - margin.right;
@@ -73,18 +73,20 @@ export class FullChartComponent implements OnInit {
         })
         .entries(calls)
 
-      donut = new FullDonutschartChartComponent("#company-size")
+     donut = new FullDonutschartChartComponent("#company-size")
 
-    revenueBar =  new FullBarchartChartComponent("#revenue", "call_revenue", "Average call revenue (USD)")
+      revenueBar = new FullBarchartChartComponent("#revenue", "call_revenue", "Average call revenue (USD)")
       durationBar = new FullBarchartChartComponent("#call-duration", "call_duration", "Average call duration (seconds)")
       unitBar = new FullBarchartChartComponent("#units-sold", "units_sold", "Units sold per call")
 
-      //stackedArea = new StackedAreaChart("#stacked-area")
+      stackedArea = new FullStackedareachartChartComponent("#stacked-area")
 
       //timeline = new Timeline("#timeline")
 
       $("#var-select").on("change", function () {
+
         unitBar.wrangleData();
+        stackedArea.wrangleData();
       })
     }).catch(function (error) {
       console.log(error);
@@ -105,6 +107,7 @@ export class FullChartComponent implements OnInit {
   ngAfterViewChecked() {
 
   }
+  
 
 
 }
@@ -116,15 +119,15 @@ function brushed() {
 }
 
 function changeDates(values) {
-  calls = allCalls.filter(function(d){
-      return ((d.date > values[0]) && (d.date < values[1]))
+  calls = allCalls.filter(function (d) {
+    return ((d.date > values[0]) && (d.date < values[1]))
   })
-  
+
   nestedCalls = d3.nest()
-      .key(function(d:any){
-          return d.category;
-      })
-      .entries(calls)
+    .key(function (d: any) {
+      return d.category;
+    })
+    .entries(calls)
 
   $("#dateLabel1").text(formatTime(values[0]))
   $("#dateLabel2").text(formatTime(values[1]))
@@ -138,9 +141,9 @@ export class NestedCall {
     return nestedCalls;
   }
 
-    get callsArray() {
+  get callsArray() {
     return calls;
   }
 
-  
+
 }
