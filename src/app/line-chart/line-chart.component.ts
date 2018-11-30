@@ -141,8 +141,8 @@ export class LineChartComponent implements OnInit {
 function update() {
   // Filter data based on selections
   var coin = $("#coin-select").val(),
-    yValue = $("#var-select").val(),
-    sliderValues = $("#date-slider").slider("values");
+    yValue = $("#var-select-linechart").val(),
+    sliderValues = $("#linechart-date-slider").slider("values");
   var dataTimeFiltered = filteredData[coin].filter(function (d) {
     return ((d.date >= sliderValues[0]) && (d.date <= sliderValues[1]))
   });
@@ -171,7 +171,7 @@ function update() {
 
   // Clear old tooltips
   d3.select(".focus").remove();
-  d3.select(".overlay").remove();
+  d3.select(".overlay-linechart").remove();
 
   // Tooltip code
   var focus = g.append("g")
@@ -192,7 +192,7 @@ function update() {
     .attr("dy", ".31em");
   svg.append("rect")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-    .attr("class", "overlay")
+    .attr("class", "overlay-linechart")
     .attr("width", width)
     .attr("height", height)
     .attr("opacity", 0)
@@ -226,21 +226,19 @@ function update() {
   var newText = (yValue == "price_usd") ? "Price (USD)" :
     ((yValue == "market_cap") ? "Market Capitalization (USD)" : "24 Hour Trading Volume (USD)")
   yLabel.text(newText);
-
-  console.log("ddddd1111")
 }
 
 function slider() {
   // Add jQuery UI slider
-  $("#date-slider").slider({
+  $("#linechart-date-slider").slider({
     range: true,
     max: parseTime("31/10/2017").getTime(),
     min: parseTime("12/5/2013").getTime(),
     step: 86400000, // One day
     values: [parseTime("12/5/2013").getTime(), parseTime("31/10/2017").getTime()],
     slide: function (event, ui) {
-      $("#dateLabel1").text(formatTime(new Date(ui.values[0])));
-      $("#dateLabel2").text(formatTime(new Date(ui.values[1])));
+      $("#linechart-dateLabel1").text(formatTime(new Date(ui.values[0])));
+      $("#linechart-dateLabel2").text(formatTime(new Date(ui.values[1])));
       update();
     }
   });

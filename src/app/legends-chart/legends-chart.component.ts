@@ -143,7 +143,8 @@ export class LegendsChartComponent implements OnInit {
         d3.json("assets/legends.json").then(function (data: any[]) {
             console.log(data);
             //Starts the slider
-
+            slider()
+            $("#slider").slider("value", +(time + 1800))
             // Clean data
             formattedData = data.map(function (year) {
                 return year["countries"].filter(function (country) {
@@ -171,16 +172,16 @@ export class LegendsChartComponent implements OnInit {
     }
 
     ngAfterContentChecked() {
-     
+
     }
 
     ngAfterViewInit() {
-       
+
     }
 
     ngAfterViewChecked() {
-        slider()
-        $("#slider").slider("value", +(time + 1800))
+        // slider()
+        //$("#slider").slider("value", +(time + 1800))
     }
 
     onStart(event: any) {

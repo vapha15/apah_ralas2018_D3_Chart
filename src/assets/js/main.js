@@ -107,7 +107,6 @@ continents.forEach(function(continent, i){
 });
 
 d3.json("data/data.json").then(function(data){
-    console.log(data);
 
     // Clean data
     formattedData = data.map(function(year){

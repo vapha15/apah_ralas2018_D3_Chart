@@ -9,20 +9,9 @@ import *as top from 'geojson';
 import * as topology2 from 'topojson-specification';
 import { FullBarchartChartComponent } from '../full-barchart-chart/full-barchart-chart.component';
 import { FullDonutschartChartComponent } from '../full-donutschart-chart/full-donutschart-chart.component';
-import { FullStackedareachartChartComponent} from '../full-stackedareachart-chart/full-stackedareachart-chart.component'
-import { FullTimelinechartChartComponent} from '../full-timelinechart-chart/full-timelinechart-chart.component'
-var margin = { left: 80, right: 20, top: 50, bottom: 100 };
-var height = 500 - margin.top - margin.bottom,
-  width = 800 - margin.left - margin.right;
+import { FullStackedareachartChartComponent } from '../full-stackedareachart-chart/full-stackedareachart-chart.component'
+import { FullTimelinechartChartComponent } from '../full-timelinechart-chart/full-timelinechart-chart.component'
 
-////////
-var svg
-var unemployment
-var promises
-var path
-var x
-var g
-var color
 var parseTime
 var formatTime
 var allCalls
@@ -54,7 +43,6 @@ export class FullChartComponent implements OnInit {
 
     d3.json("assets/calls.json").then(function (data: any) {
 
-
       console.log(data)
       data.map(function (d) {
         d.call_revenue = +d.call_revenue
@@ -65,7 +53,6 @@ export class FullChartComponent implements OnInit {
       })
 
       allCalls = data;
-
       calls = data;
 
       nestedCalls = d3.nest()
@@ -74,7 +61,7 @@ export class FullChartComponent implements OnInit {
         })
         .entries(calls)
 
-     donut = new FullDonutschartChartComponent("#company-size")
+      donut = new FullDonutschartChartComponent("#company-size")
 
       revenueBar = new FullBarchartChartComponent("#revenue", "call_revenue", "Average call revenue (USD)")
       durationBar = new FullBarchartChartComponent("#call-duration", "call_duration", "Average call duration (seconds)")
@@ -92,9 +79,6 @@ export class FullChartComponent implements OnInit {
     }).catch(function (error) {
       console.log(error);
     });
-
-
-
   }
 
   ngAfterContentChecked() {
@@ -108,14 +92,10 @@ export class FullChartComponent implements OnInit {
   ngAfterViewChecked() {
 
   }
-  
-
-
 }
 
 function brushed() {
-  var vis = this
-  console.log("#####TRIGGED")
+
   var selection = d3.event.selection || timeline.x.range();
   var newValues = selection.map(timeline.x.invert)
   changeDates(newValues)
@@ -138,7 +118,7 @@ function changeDates(values) {
   donut.wrangleData();
   revenueBar.wrangleData();
   unitBar.wrangleData();
-  //durationBar.wrangleData();
+  durationBar.wrangleData();
   stackedArea.wrangleData();
 }
 
@@ -155,6 +135,5 @@ export class NestedCall {
   get brushedFunction() {
     return brushed;
   }
-
 
 }

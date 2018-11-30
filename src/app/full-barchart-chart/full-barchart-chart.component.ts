@@ -28,9 +28,8 @@ export class FullBarchartChartComponent implements OnInit {
   }
 
   initVis = function(){
-     vis = this;
+   vis = this;
 
-     console.log(vis.variable)
     vis.margin = { left:60, right:50, top:30, bottom:30 };
     vis.height = 130 - vis.margin.top - vis.margin.bottom;
     vis.width = 350 - vis.margin.left - vis.margin.right;
@@ -89,6 +88,7 @@ export class FullBarchartChartComponent implements OnInit {
 
 
 wrangleData = function(){
+ vis = this;
     vis.dataFiltered = NestedCall.prototype.nestedCallsArray.map(function(category){
         return {
             category: category.key,
@@ -102,10 +102,8 @@ wrangleData = function(){
 };
 
 
-updateVis = function(){
-     
- 
-
+updateVis = function(){ 
+     vis = this;
     // Update scales
     vis.y.domain([0, d3.max(vis.dataFiltered, (d:any) => { return +d.size; })]);
 

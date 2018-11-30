@@ -1,13 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import * as d3 from 'd3';
 import * as $ from 'jquery';
-import { FullChartComponent } from '../full-chart/full-chart.component';
 import { NestedCall } from '../full-chart/full-chart.component';
 declare var $: $
 declare var $: $
 var parseTime
 var formatTime
-var vis
 
 @Component({
   selector: 'app-full-timelinechart-chart',
@@ -30,7 +28,7 @@ export class FullTimelinechartChartComponent implements OnInit  {
   }
 
   initVis = function () {
-    vis = this;
+    var vis = this;
 
     vis.margin = {top: 0, right: 100, bottom: 20, left: 80};
     vis.width = 800 - vis.margin.left - vis.margin.right;
@@ -73,12 +71,12 @@ export class FullTimelinechartChartComponent implements OnInit  {
         .call(vis.brush);
 
     vis.wrangleData();
-   
-
+  
   };
 
 
   wrangleData = function () {
+    var vis = this;
 
     vis.variable = "call_revenue"
 
@@ -100,7 +98,6 @@ export class FullTimelinechartChartComponent implements OnInit  {
     vis.updateVis();
 
   };
-
 
   updateVis = function () {
     var vis = this
@@ -124,10 +121,8 @@ export class FullTimelinechartChartComponent implements OnInit  {
     vis.areaPath
         .data([vis.dataFiltered])
         .attr("d", vis.area);
-  console.log("")
-    }
-  
 
+    }
 
 }
 
