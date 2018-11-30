@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import * as d3 from 'd3';
-
 import * as $ from 'jquery';
 declare var $: $
 import * as topology from 'topojson';
+import { Feature, Geometry } from 'geojson';
+import *as top from 'geojson';
+import * as topology2  from 'topojson-specification';
 
 var margin = { left: 80, right: 20, top: 50, bottom: 100 };
 var height = 500 - margin.top - margin.bottom,
@@ -73,7 +75,7 @@ export class GeomapChartComponent implements OnInit {
 
         g.call(d3.axisBottom(x)
             .tickSize(13)
-            .tickFormat(function(x, i) { return i ? x : x + "%"; })
+            .tickFormat(function (x){ return  x + "%"; })
             .tickValues(color.domain()))
             .select(".domain")
             .remove();
@@ -113,11 +115,13 @@ export class GeomapChartComponent implements OnInit {
 }
 
 function ready(us: any) {
-
+//Topology<Objects<{ [name: string]: any; }>>'.
+    var casted = us as Feature<Geometry>
     svg.append("g")
         .attr("class", "counties")
         .selectAll("path")
-        .data(topology.feature(us, us.objects.counties).features)
+        .data(
+            topology.feature(us, casted["objects"].counties).features)
         .enter().append("path")
         .attr("fill", function (d) {
             return color(d.rate = unemployment.get(d.id));
